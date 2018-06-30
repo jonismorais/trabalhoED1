@@ -31,15 +31,15 @@ main(){
     for (i=0; i<1; i++){
     
         fscanf(file, "%i\n", &produto[i].codigo);
-        printf ("%i\n", produto[i].codigo);
+        //printf ("%i\n", produto[i].codigo);
         fgets(produto[i].descricao, 100, file);
-        printf("%s", produto[i].descricao);
+        //printf("%s", produto[i].descricao);
         fscanf(file, "%i\n", &produto[i].qtd);
-        printf ("%i\n", produto[i].qtd);
+        //printf ("%i\n", produto[i].qtd);
         fscanf(file, "%f\n", &produto[i].precoCusto);
-        printf ("R$ %.2f\n", produto[i].precoCusto);
+        //printf ("R$ %.2f\n", produto[i].precoCusto);
         fscanf(file, "%f\n", &produto[i].precoVenda);
-        printf ("R$ %.2f\n", produto[i].precoVenda);
+        //printf ("R$ %.2f\n", produto[i].precoVenda);
         
         totalCusto = totalCusto + produto[i].precoCusto;
         totalVenda = totalVenda + produto[i].precoCusto;
