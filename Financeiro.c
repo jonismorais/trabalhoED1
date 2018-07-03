@@ -22,23 +22,54 @@ main(){
     
     Produto produto[10];
     int i;
-    float totalCusto=0, totalVenda=0, totalLucro;
+   
     
-    for (i=0; i<1; i++){
+    for (i=0; i<10; i++){
     
-        fscanf(file, "%i\n", &produto[i].codigo);
+        fscanf(file, "%d\n", &produto[i].codigo);
         fgets(produto[i].descricao, 100, file);
-        fscanf(file, "%i\n", &produto[i].qtd);
+        fscanf(file, "%d\n", &produto[i].qtd);
         fscanf(file, "%f\n", &produto[i].precoCusto);
         fscanf(file, "%f\n", &produto[i].precoVenda);
         
-        totalCusto = totalCusto + produto[i].precoCusto;
-        totalVenda = totalVenda + produto[i].precoCusto;
     }
     
     fclose(file);
     
-    totalLucro = totalVenda-totalCusto;
+    Produto produtoEncotrado;
+    int controle=0;
+    float totalCusto=0, totalVenda=0, totalLucro=0, valorVenda, valorLucro;
+    
+    
+    do{
+        printf("Informe o código do produto: ");
+        scanf("%d", &produtoEncotrado.codigo);
+        for (i=0; i<10; i++){
+            if (produtoEncotrado.codigo == produto[i].codigo){
+                produtoEncotrado.descricao = produto[i].descricao;
+                produtoEncotrado.precoCusto = produto[i].precoCusto;
+                produtoEncotrado.precoVenda = produto[i].precoVenda;
+                printf ("Código: %d\n", produtoEncotrado.codigo);
+                printf ("%s\n", produtoEncotrado.descricao);
+                printf ("Preço de venda: %f\n", produtoEncotrado.precoVenda);
+                printf ("Digite 1, se este é o produto que deseja, 0 caso não seja: ");
+                scanf ("%i", &controle);
+                
+            }else{
+                
+                printf ("Código do Produto não encontrado \n");
+                
+            }
+        }    
+    }while(controle==1);
+    
+    printf ("Quantidade de produtos vendidos: ");
+    scanf ("%d", &produtoEncotrado.qtd);
+    
+    valorVenda = produtoEncotrado.precoVenda*produtoEncotrado.qtd;
+    valorLucro = valorVenda - produtoEncotrado.precoCusto*produtoEncotrado.qtd;
+    
+    totalLucro = totalLucro + valorLucro;
     
     printf("Total Custo %f, Total Venda %f, Total Lucro %f", totalCusto, totalVenda, totalLucro);
     
