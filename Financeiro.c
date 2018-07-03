@@ -13,7 +13,7 @@ FILE *file;
 
 main(){
     
-    file = fopen("clientes.txt", "r"); //Verificar nome do arquivo
+    file = fopen("produtos.txt", "r"); //Verificar nome do arquivo
     
     if (file==NULL){
         printf("Não existe um arquivo de cadastro, ir para a parte de cadastramento");
