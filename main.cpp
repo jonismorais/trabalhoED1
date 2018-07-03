@@ -212,8 +212,9 @@ void ajuda(void) {
 	printf("\t#                                                          #\n");
 	printf("\t# Engenharia da Computação - Universidade Federal de Goiás #\n");
 	printf("\t#                                                          #\n");
-	printf("\t#     Jonismar Morais // Mariana Casseta // Pedro Lopes    #\n");
-	printf("\t############################################################\n\n\n");
+	printf("\t#              Jonismar Morais // Mariana Casseta          #\n");
+	printf("\t#                Pedro Lopes // Cristiano Gonçalves        #\n");
+	printf("\t############################################################\n\n\n");S
 	printf("\t\t\tTecle <ENTER> para voltar");
 	getch();
 }
