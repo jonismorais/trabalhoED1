@@ -44,8 +44,7 @@ void financeiro(void);
 void subMenu(void);
 void subMenuCadastros(void);
 
-int main(void)
-{
+int main(void){
 	setlocale(LC_ALL,"Portuguese");
  char opcao[2], op, menu[2], men;
  int controle=1;
@@ -184,12 +183,12 @@ void financeiro(){
     valorLucro = valorVenda - produtoEncotrado.precoCusto*produtoEncotrado.qtd;
 
     file2 = fopen ("financeiro.txt", "a");
+    
+    fscanf(file2, "%f\n", &totalVenda);
+    fscanf(file2, "%f\n", &totalLucro);
 
-    fscanf(file, "%f\n", &totalVenda);
-    fscanf(file, "%f\n", &totalLucro);
-
-    fprintf ("%f\n", codigo);
-    fprintf ("%d\n", )
+    fprintf (file2, "%f\n", &totalVenda);
+    fprintf (file2, "%d\n", &totalLucro);
 
     fclose(file2);
 }
