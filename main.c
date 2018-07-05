@@ -24,7 +24,7 @@ struct cadFornecedor {
 struct cadProduto {
     char codigo[9];
     char descricao[100];
-    int qtd;
+    int qtd, qtdVenda;
     float precoCusto;
     float precoVenda;
 } Produto;
@@ -35,24 +35,24 @@ void incluir(void);
 void consultar(void);
 void excluir(void);
 void alterar(void);
-//void abrir(char);
+void abrir(char[3]);
 void listar(void);
 void ajuda(void);
-void financeiro(void);
+int financeiro(void);
 void subMenu(void);
 void subMenuCadastros(void);
 
 int iTag = 0;
 
 int main(void) {
-
+    setlocale(LC_ALL, "Portuguese");
     char opcao[2], op;
     do {
         do {
             system("cls");
-            printf("\n\n\n\n\n\n\n");
+            printf("\n\n");
             printf("\t########################################################\n");
-            printf("\t#        					       #\n");
+            printf("\t#                                                      #\n");
             printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
             printf("\t#                                                      #\n");
             printf("\t########################################################\n\n\n");
@@ -64,6 +64,7 @@ int main(void) {
             printf("\n <S> - Sair");
             printf("\n\n\n Digite a Sua Opção:");
             gets(opcao);
+            setbuf(stdin, NULL);
             op = tolower(*opcao);
         } while (!strchr("cfrhs", op));
 
@@ -84,7 +85,7 @@ void subMenu(void) {
     do {
         do {
             system("cls");
-            printf("\n\n\n\n\n\n\n");
+            printf("\n\n");
             printf("\t########################################################\n");
             printf("\t#        					       #\n");
             printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
@@ -97,6 +98,7 @@ void subMenu(void) {
             printf("\n <V> - Voltar");
             printf("\n\n\n Digite a Sua Opção:");
             gets(opcao);
+            setbuf(stdin, NULL);
             op = tolower(*opcao);
         } while (!strchr("cfpv", op));
 
@@ -125,7 +127,7 @@ void subMenuCadastros(void) {
     do {
         do {
             system("cls");
-            printf("\n\n\n\n\n\n\n");
+            printf("\n\n");
             printf("\t########################################################\n");
             printf("\t#                                                      #\n");
             printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
@@ -140,6 +142,7 @@ void subMenuCadastros(void) {
             printf("\n <V> - Voltar");
             printf("\n\n\n Opção:");
             gets(opcao);
+            setbuf(stdin, NULL);
             op = tolower(*opcao);
         } while (!strchr("iaeclv", op));
         switch (op) {
@@ -162,7 +165,7 @@ void subMenuCadastros(void) {
 
 void ajuda(void) {
     system("cls");
-    printf("\a\n\n\n\n\n\n\n");
+    printf("\a\n\n");
     printf("\t############################################################\n");
     printf("\t#   Trabalho de Final de Semestre - Estrutura de Dados 1   #\n");
     printf("\t#                                                          #\n");
@@ -206,13 +209,17 @@ void incluir(void) { //char *um="0";
             printf("\n Digite o nome ou <FIM> para sair:\n\n");
             printf(" ");
             gets(Cliente.nome);
+            setbuf(stdin, NULL);
             if ((strcmp(Cliente.nome, "fim") != 0)&&(strcmp(Cliente.nome, "FIM") != 0)) {
                 printf("\n Código:");
                 gets(Cliente.codigo);
+                setbuf(stdin, NULL);
                 printf("\n CPF:");
                 gets(Cliente.cpf);
+                setbuf(stdin, NULL);
                 printf("\n Telefone:");
                 gets(Cliente.telefone);
+                setbuf(stdin, NULL);
                 Cliente.status = '1';
                 if (fwrite(&Cliente, sizeof (struct cadCliente), 1, fp) != 1) {
                     printf("\n Erro de gravação!!");
@@ -231,13 +238,17 @@ void incluir(void) { //char *um="0";
             printf("\n Digite o nome ou <FIM> para sair:\n\n");
             printf(" ");
             gets(Fornecedor.nome);
+            setbuf(stdin, NULL);
             if ((strcmp(Fornecedor.nome, "fim") != 0)&&(strcmp(Fornecedor.nome, "FIM") != 0)) {
                 printf("\n Código:");
                 gets(Fornecedor.codigo);
+                setbuf(stdin, NULL);
                 printf("\n CPF:");
                 gets(Fornecedor.documento);
+                setbuf(stdin, NULL);
                 printf("\n Telefone:");
                 gets(Fornecedor.telefone);
+                setbuf(stdin, NULL);
                 Fornecedor.status = '1';
                 if (fwrite(&Fornecedor, sizeof (struct cadFornecedor), 1, fp) != 1) {
                     printf("\n Erro de gravação!!");
@@ -289,6 +300,7 @@ int busca(void) {
     abrir("rb");
     printf("\nDigite o nome a ser procurado:");
     gets(nomep);
+    setbuf(stdin, NULL);
     rewind(fp);
     while ((!feof(fp))&&(achou == -1)) {
         if (iTag == 1) {
@@ -677,85 +689,83 @@ void excluir(void) {
     }
 }
 
-void financeiro() {
-
-  //  system("cls");
-
-    /*fp = fopen("produtos.txt", "r");
-
-    if (fp == NULL) {
-        printf("Não existe um arquivo de produtos, ir para a parte de cadastramento");
-        main();
-    }
-
-    int i;
-
-    struct cadProduto produto[10];
-    struct cadProduto produtoEncotrado;
-
-    for (i = 0; i < 10; i++) {
-        fgets(produto[i].codigo, 9, fp);
-        fgets(produto[i].descricao, 100, fp);
-        fscanf(fp, "%d\n", &produto[i].qtd);
-        fscanf(fp, "%f\n", &produto[i].precoCusto);
-        fscanf(fp, "%f\n", &produto[i].precoVenda);
-
-    }
-
-    fclose(fp);*/
+int financeiro(void) {
 
     char controle[3];
-    float totalCusto, totalVenda, totalLucro, valorVenda, valorLucro;
+    int pos;
+    float totalVenda, totalLucro, valorVenda, valorLucro;
 
+    iTag=3;
+    controle[3]='nao';
+    totalLucro=0;
+    totalVenda=0;
 
     do {
-        iTag=3;
-        consultar();
-        /*fseek(fp, pos * sizeof (struct cadProduto), SEEK_SET);
-        fread(&Produto, sizeof (struct cadProduto), 1, fp);
-        printf("\nCódigo: %s", Produto.codigo);
-        printf("\nDescrição: %s", Produto.descricao);
-        printf("\nPreço de Custo: %.2f", Produto.precoCusto);
-        printf("\nPreço de Venda: %.2f", Produto.precoVenda);
-        printf("\nEstoque Atual: %d", Produto.qtd);*/
-        //getch();
+        pos=busca();
 
-
-
-        printf("Este é o produto que deseja? (sim/não): ");
-        //gets(controle);
+        if (pos == -1) {
+            printf("\nDados não encontrados no arquivo!\n");
+            system("pause");
+        } else if (pos == -2) {
+            printf("\nDados não encontrados no arquivo!\n");
+            system("pause");
+        } else {
+            abrir("rb+");
+            fseek(fp, pos * sizeof (struct cadProduto), SEEK_SET);
+            fread(&Produto, sizeof (struct cadProduto), 1, fp);
+            printf("\nCódigo: %s", Produto.codigo);
+            printf("\nDescrição: %s", Produto.descricao);
+            printf("\nPreço de Custo: %.2f", Produto.precoCusto);
+            printf("\nEstoque Atual: %d", Produto.qtd);
+            printf("\n\nEste é o produto que deseja? (sim/não): ");
+            gets(controle);
+            setbuf(stdin,NULL);
+        }
     } while ((strcmp(controle, "sim") != 0)&&(strcmp(controle, "SIM") != 0));
 
-//    controle = 0;
+    printf("\nPreço Unitário de Venda: ");
+    scanf("%f", &Produto.precoVenda);
+    printf("\nQuantidade de produtos vendidos: ");
+    scanf("%d", &Produto.qtdVenda);
+    valorVenda = Produto.precoVenda * Produto.qtdVenda;
 
-    /*printf("Quantidade de produtos vendidos: ");
-    scanf("%d", &produtoEncotrado.qtd);
     printf("\n\n");
 
-    printf("Código:         %d\n", produtoEncotrado.codigo);
-    printf("%s\n", produtoEncotrado.descricao);
-    printf("Quantidade:     %d", produtoEncotrado.qtd);
-    printf("Preço de venda: %f\n\n", produtoEncotrado.precoVenda);
+    system("cls");
+    printf("Código:%s\n", Produto.codigo);
+    printf(" %s\n", Produto.descricao);
+    printf("Quantidade: %.2d\n", Produto.qtdVenda);
+    printf("Valor Unitário de venda: %.2f\n", Produto.precoVenda);
+    printf("Valor Total da venda: %.2f\n\n", valorVenda);
 
-    printf("Digite qualquer tecla para continuar ou <FIM> para sair:");
-    scanf("%d", &controle);
+    valorLucro = valorVenda - Produto.precoCusto * Produto.qtdVenda;
 
-    if (controle != 1) exit(0);*/
+    fp = fopen("financeiro.txt", "r");
 
+    if (fscanf(fp, "%f\n", &totalVenda)!=NULL){
+        fscanf(fp, "%f", &totalLucro);
+    }else{
+        totalLucro=0,0;
+        totalVenda=0,0;
 
-    valorVenda = Produto.precoVenda * Produto.qtd;
-    valorLucro = valorVenda - Produto.precoCusto * Produto.qtd;
-
-    fp = fopen("financeiro.txt", "a");
-
-    fscanf(fp, "%f\n", &totalVenda);
-    fscanf(fp, "%f\n", &totalLucro);
-
-    totalLucro = totalLucro + valorLucro;
-    totalVenda = totalVenda + valorVenda;
-
-    fprintf(fp, "%f\n", &totalVenda);
-    fprintf(fp, "%f\n", &totalLucro);
+    }
 
     fclose(fp);
+
+    printf("%.2f  %.2f", totalVenda, totalLucro);
+    totalVenda = totalVenda + valorVenda;
+    totalLucro = totalLucro + valorLucro;
+
+
+    fopen("financeiro.txt", "w");
+
+    fprintf(fp, "%.2f\n", totalVenda);
+    fprintf(fp, "%.2f\n", totalLucro);
+
+    fclose(fp);
+
+    printf("Gravado com suscesso!\n\n");
+    system("pause");
+
+    main();
 }
