@@ -681,7 +681,7 @@ void financeiro() {
 
   //  system("cls");
 
-    fp = fopen("produtos.txt", "r");
+    /*fp = fopen("produtos.txt", "r");
 
     if (fp == NULL) {
         printf("Não existe um arquivo de produtos, ir para a parte de cadastramento");
@@ -702,35 +702,33 @@ void financeiro() {
 
     }
 
-    fclose(fp);
+    fclose(fp);*/
 
-    char controle=NULL;
+    char controle[3];
     float totalCusto, totalVenda, totalLucro, valorVenda, valorLucro;
 
 
     do {
-        system("cls");
-        printf("Informe o código do produto: ");
-        scanf("%s", &produtoEncotrado.codigo);
-        for (i = 0; i < 10; i++) {
-            if (produtoEncotrado.codigo == produto[i].codigo) {
-//                produtoEncotrado.descricao = produto[i].descricao;
-                produtoEncotrado.precoCusto = produto[i].precoCusto;
-                produtoEncotrado.precoVenda = produto[i].precoVenda;
-                printf("Código: %s\n", produtoEncotrado.codigo);
-                printf("%s\n", produtoEncotrado.descricao);
-                printf("Preço de venda: %f\n", produtoEncotrado.precoVenda);
-                printf("Digite 1, se este é o produto que deseja, 0 caso não seja: ");
-                scanf("%i", &controle);
+        iTag=3;
+        consultar();
+        /*fseek(fp, pos * sizeof (struct cadProduto), SEEK_SET);
+        fread(&Produto, sizeof (struct cadProduto), 1, fp);
+        printf("\nCódigo: %s", Produto.codigo);
+        printf("\nDescrição: %s", Produto.descricao);
+        printf("\nPreço de Custo: %.2f", Produto.precoCusto);
+        printf("\nPreço de Venda: %.2f", Produto.precoVenda);
+        printf("\nEstoque Atual: %d", Produto.qtd);*/
+        //getch();
 
-            }
-        }
-        if (controle==NULL) printf("Produto não encontrado");
-    } while ((strcmp(controle, "fim") != 0)&&(strcmp(controle, "FIM") != 0));
 
-    controle = 0;
 
-    printf("Quantidade de produtos vendidos: ");
+        printf("Este é o produto que deseja? (sim/não): ");
+        //gets(controle);
+    } while ((strcmp(controle, "sim") != 0)&&(strcmp(controle, "SIM") != 0));
+
+//    controle = 0;
+
+    /*printf("Quantidade de produtos vendidos: ");
     scanf("%d", &produtoEncotrado.qtd);
     printf("\n\n");
 
@@ -742,11 +740,11 @@ void financeiro() {
     printf("Digite qualquer tecla para continuar ou <FIM> para sair:");
     scanf("%d", &controle);
 
-    if (controle != 1) exit(0);
+    if (controle != 1) exit(0);*/
 
 
-    valorVenda = produtoEncotrado.precoVenda * produtoEncotrado.qtd;
-    valorLucro = valorVenda - produtoEncotrado.precoCusto * produtoEncotrado.qtd;
+    valorVenda = Produto.precoVenda * Produto.qtd;
+    valorLucro = valorVenda - Produto.precoCusto * Produto.qtd;
 
     fp = fopen("financeiro.txt", "a");
 
