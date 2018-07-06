@@ -692,12 +692,12 @@ void excluir(void) {
 int financeiro(void) {
 
     char controle[3];
-    int pos;
-    float totalVenda, totalLucro, valorVenda, valorLucro;
+    int pos, contProd;
+    float totalVenda, valorVenda, valorLucro, tLucroProd;
 
+    tLucroProd=0;
     iTag=3;
     controle[3]='nao';
-    totalLucro=0;
     totalVenda=0;
 
     do {
@@ -742,25 +742,29 @@ int financeiro(void) {
 
     fp = fopen("financeiro.txt", "r");
 
-    if (fscanf(fp, "%f\n", &totalVenda)!=NULL){
-        fscanf(fp, "%f", &totalLucro);
-    }else{
-        totalLucro=0,0;
-        totalVenda=0,0;
 
+    if (fgets(Produto.codigo, 9, fp)!=NULL){
+            fgets(Produto.descricao, 100, fp);
+            fscanf(fp, "%d\n", &Produto.qtd);
+            fscanf(fp, "%d\n", &Produto.qtdVenda);
+            fscanf(fp, "%f\n", &Produto.precoCusto);
+    }else{
+        contProd =0;
     }
 
     fclose(fp);
 
-    printf("%.2f  %.2f", totalVenda, totalLucro);
-    totalVenda = totalVenda + valorVenda;
-    totalLucro = totalLucro + valorLucro;
+        printf("%.2f", totalVenda);
+        totalVenda = totalVenda + valorVenda;
 
 
-    fopen("financeiro.txt", "w");
+    fopen("financeiro.txt", "a");
 
-    fprintf(fp, "%.2f\n", totalVenda);
-    fprintf(fp, "%.2f\n", totalLucro);
+        fprintf(fp, "%s\n", Produto.codigo);
+        fprintf(fp, "%s\n", Produto.descricao);
+        fprintf(fp, "%d\n", Produto.qtd);
+        fprintf(fp, "%d\n", Produto.qtdVenda);
+        fprintf(fp, "%.2f\n", Produto.precoCusto);
 
     fclose(fp);
 
