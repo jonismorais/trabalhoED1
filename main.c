@@ -66,7 +66,7 @@ Relatorio *fim = NULL;
 Relatorio *aux = NULL;
 Relatorio *ponteiroAux = NULL;
 Relatorio *inicioFila = NULL;
-float totalVenda, valorVenda, valorLucro, tLucroProd;
+float totalVenda, valorVenda, valorLucro= 0, tLucroProd;
 
 int main(void) {
     setlocale(LC_ALL, "Portuguese");
@@ -719,7 +719,6 @@ int financeiro(void) {
 
     char controle[3];
     int pos, contProd;
-    //float totalVenda, valorVenda, valorLucro, tLucroProd;
 
     time_t data;
     time(&data);
@@ -770,7 +769,7 @@ int financeiro(void) {
     printf("Valor Total da venda: %.2f\n\n", valorVenda);
 
     valorLucro = valorVenda - Produto.precoCusto * Produto.qtdVenda;
-    
+
 
     fp = fopen("financeiro.txt", "r");
 
@@ -795,7 +794,7 @@ int financeiro(void) {
 
 
     fclose(fp);
-    
+
     novo=(Relatorio*)malloc(sizeof(Relatorio));
     novo->dia = (d->tm_mday);
     novo->mes = (d ->tm_mon + 1);
@@ -814,7 +813,7 @@ int financeiro(void) {
     fclose(fp);
 
     novo->prox = NULL;
-    
+
     if(inicio == NULL){
         inicio = novo;
         inicioFila = inicio;
@@ -865,8 +864,8 @@ void relat(){
             system("cls");
             printf("\n\n\tRELATORIO DO DIA (%d / %d)\n\n", (d->tm_mday), (d ->tm_mon + 1));
 
-            printf("\n\tLucro do Dia: %d", valorLucro);
-            printf("\n\tValor Custo: %d\n\n", (valorLucro - totalVenda));
+            printf("\n\tLucro do Dia: %.2f", valorLucro);
+            printf("\n\tValor Custo: %.2f\n\n", (valorLucro - totalVenda));
 
             printf("\n\n\nO lucro é considerado todo o rendimento positivo obtido através de uma negociação econômica ou de qualquer outro gênero. Na economia, o lucro é tudo o que foi ganhado ou recebido a partir de um ato de comercialização financeira..\n");
             printf("\n\nO preço de custo é aquele cobrado sobre os produtos ou serviços e equivale apenas ao custo necessário para a matéria prima e mão de obra. Ou seja, nele não é acrescentado o lucro por parte de quem venderá o produto, nem valores referentes à estocagem, custos básicos..\n");
@@ -880,5 +879,4 @@ void relat(){
         default: relat();
     }
   }while(1);
-
 }
