@@ -77,7 +77,7 @@ int main(void) {
             printf("\n\n");
             printf("\t########################################################\n");
             printf("\t#                                                      #\n");
-            printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
+            printf("\t#            Sistema de Gerenciamento de Caixa         #\n");
             printf("\t#                                                      #\n");
             printf("\t########################################################\n\n\n");
             printf("\n Digite uma das opções\n\n");
@@ -113,7 +113,7 @@ void subMenu(void) {
             system("cls");
             printf("\n\n");
             printf("\t########################################################\n");
-            printf("\t#        					       #\n");
+            printf("\t#        					                             #\n");
             printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
             printf("\t#                                                      #\n");
             printf("\t########################################################\n\n\n");
@@ -156,7 +156,7 @@ void subMenuCadastros(void) {
             printf("\n\n");
             printf("\t########################################################\n");
             printf("\t#                                                      #\n");
-            printf("\t#     Programa de Cadastro de Clientes e Produtos      #\n");
+            printf("\t#          Sistema de Gerenciamento de Caixa           #\n");
             printf("\t#                                                      #\n");
             printf("\t########################################################\n\n\n");
             printf("\n Digite uma das opções\n\n");
@@ -200,6 +200,9 @@ void ajuda(void) {
     printf("\t#            Jonismar Morais // Mariana Casseta            #\n");
     printf("\t#            Pedro Lopes // Cristiano Gonçalves            #\n");
     printf("\t############################################################\n\n\n");
+    printf("\n\n\nLUCRO\n\tO lucro é considerado todo o rendimento positivo obtido através de uma negociação econômica ou de qualquer outro gênero. Na economia, o lucro é tudo o que foi ganhado ou recebido a partir de um ato de comercialização financeira..\n");
+    printf("\n\nCAIXA DE CUSTO\n\tO preço de custo é aquele cobrado sobre os produtos ou serviços e equivale apenas ao custo necessário para a matéria prima e mão de obra. Ou seja, nele não é acrescentado o lucro por parte de quem venderá o produto, nem valores referentes à estocagem, custos básicos..\n");
+    printf("\n\nMELHOR FORMA DE INVESTIR\n\tÉ fundamental para a empresa manter certa reserva de seu lucro para eventuais necessidades ou imprevistos. Desta forma, em períodos de baixa ou mesmo falta de caixa, a empresa poderá passar pelas ""turbulências"" de forma muito mais tranquila e sem precisar recorrer a bancos ou outras intituições funanceiras, consequentemente sem precisar pagar juros a terceiros...\n\n\n");
     printf("\t\t\tTecle <ENTER> para voltar");
     getch();
 }
@@ -776,8 +779,8 @@ int financeiro(void) {
 
     if (fgets(Produto.codigo, 9, fp)!=NULL){
             fgets(Produto.descricao, 100, fp);
-            fscanf(fp, "%d\n", &Produto.qtd);
-            fscanf(fp, "%d\n", &Produto.qtdVenda);
+            fscanf(fp, "%d\n\n", &Produto.qtd);
+            fscanf(fp, "%d\n\n", &Produto.qtdVenda);
             fscanf(fp, "%f\n", &Produto.precoCusto);
     }
 
@@ -790,7 +793,7 @@ int financeiro(void) {
         fprintf(fp, "%s\n", Produto.descricao);
         fprintf(fp, "%d\n", Produto.qtd);
         fprintf(fp, "%d\n", Produto.qtdVenda);
-        fprintf(fp, "%.2f\n", Produto.precoCusto);
+        fprintf(fp, "%.2f\n\n", Produto.precoCusto);
 
 
     fclose(fp);
@@ -808,7 +811,7 @@ int financeiro(void) {
         fprintf(fp, "%d\n", novo->mes);
         fprintf(fp, "%s\n", Produto.codigo);
         fprintf(fp, "%.2f\n", novo->valorCust);
-        fprintf(fp, "%.2f\n", novo->valorLucr);
+        fprintf(fp, "%.2f\n\n", novo->valorLucr);
 
     fclose(fp);
 
@@ -837,25 +840,25 @@ void relat(){
     int diaInicio, diaFim, mesInicio, mesFim;
     char menu[2], men;
 
-  do{
     do{
-      system("cls");
-      printf("\n\n");
-      printf("\t########################################################\n");
-      printf("\t#                                                      #\n");
-      printf("\t#         Programa de Relatórios Financeiros           #\n");
-      printf("\t#                                                      #\n");
-      printf("\t########################################################\n\n\n");
-      printf("\n Digite uma das opções que deseja obter o relatório\n\n");
-      printf("\n <P> - Relatório do dia");
-      printf("\n <V> - Voltar");
-      printf("\n\n\n Digite a Sua Opção:");
-      fflush(stdin);
-      setbuf(stdin, NULL);
-      gets(menu);
-      setbuf(stdin, NULL);
-      men = tolower(*menu);
-    }while(!strchr("cfpv", men));
+        do{
+            system("cls");
+            printf("\n\n");
+            printf("\t########################################################\n");
+            printf("\t#                                                      #\n");
+            printf("\t#         Programa de Relatórios Financeiros           #\n");
+            printf("\t#                                                      #\n");
+            printf("\t########################################################\n\n\n");
+            printf("\n Digite uma das opções que deseja obter o relatório\n\n");
+            printf("\n <P> - Relatório do dia");
+            printf("\n <V> - Voltar");
+            printf("\n\n\n Digite a Sua Opção:");
+            fflush(stdin);
+            setbuf(stdin, NULL);
+            gets(menu);
+            setbuf(stdin, NULL);
+            men = tolower(*menu);
+        }while(!strchr("cfpv", men));
 
 
     switch (men) {
@@ -865,12 +868,12 @@ void relat(){
             printf("\n\n\tRELATORIO DO DIA (%d / %d)\n\n", (d->tm_mday), (d ->tm_mon + 1));
 
             printf("\n\tLucro do Dia: %.2f", valorLucro);
-            printf("\n\tValor Custo: %.2f\n\n", (valorLucro - totalVenda));
+            printf("\n\tValor Custo: %.2f\n\n", (valorVenda-valorLucro));
 
-            printf("\n\n\nO lucro é considerado todo o rendimento positivo obtido através de uma negociação econômica ou de qualquer outro gênero. Na economia, o lucro é tudo o que foi ganhado ou recebido a partir de um ato de comercialização financeira..\n");
-            printf("\n\nO preço de custo é aquele cobrado sobre os produtos ou serviços e equivale apenas ao custo necessário para a matéria prima e mão de obra. Ou seja, nele não é acrescentado o lucro por parte de quem venderá o produto, nem valores referentes à estocagem, custos básicos..\n");
-            printf("\n\nÉ fundamental para a empresa manter certa reserva de seu lucro para eventuais necessidades ou imprevistos. Desta forma, em períodos de baixa ou mesmo falta de caixa, a empresa poderá passar pelas ""turbulências"" de forma muito mais tranquila e sem precisar recorrer a bancos ou outras intituições funanceiras, consequentemente sem precisar pagar juros a terceiros...\n\n\n");
-            system("pause");system("pause");
+            printf("\n\n\nLUCRO\n\tO lucro é considerado todo o rendimento positivo obtido através de uma negociação econômica ou de qualquer outro gênero. Na economia, o lucro é tudo o que foi ganhado ou recebido a partir de um ato de comercialização financeira..\n");
+            printf("\n\nCAIXA DE CUSTO\n\tO preço de custo é aquele cobrado sobre os produtos ou serviços e equivale apenas ao custo necessário para a matéria prima e mão de obra. Ou seja, nele não é acrescentado o lucro por parte de quem venderá o produto, nem valores referentes à estocagem, custos básicos..\n");
+            printf("\n\nMELHOR FORMA DE INVESTIR\n\tÉ fundamental para a empresa manter certa reserva de seu lucro para eventuais necessidades ou imprevistos. Desta forma, em períodos de baixa ou mesmo falta de caixa, a empresa poderá passar pelas ""turbulências"" de forma muito mais tranquila e sem precisar recorrer a bancos ou outras intituições funanceiras, consequentemente sem precisar pagar juros a terceiros...\n\n\n");
+            system("pause");
             break;
 
         case 'v':
